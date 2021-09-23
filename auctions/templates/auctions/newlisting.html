@@ -1,0 +1,44 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}Create New Listing {% endblock %}
+
+{% block body %}
+    <h2 class="text-center title">Create New Listing</h2>
+
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-10 col-md-8 col-lg-6 pt-2">
+                
+                <form action="{% url 'newlisting' %}" method="POST",enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    {% for field in form %}
+                        
+                        {% if field.name != 'starting_bid' %}
+                            <div class="form-group">
+                                {{ field.label_tag }} {{ field }}
+                            </div>    
+                        
+                        {% else %}
+                            {{ field.label_tag }}
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">£</span>
+                                </div>
+                                {{ field }}
+                            </div>
+                        {% endif %}
+                        
+                    {% endfor %}
+
+                    <div class="form-group my-4">
+                        <button type="submit" class="btn btn-primary btn-customized btn-block">Save</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

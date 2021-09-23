@@ -1,0 +1,35 @@
+{% extends "auctions/layout.html" %}
+{% load humanize %}
+
+{% block title %}{{ category.name }} {% endblock %}
+
+{% block body %}
+    <h2 class="text-center title">{{category.name}}</h2>           
+    
+    <div class="container d-flex flex-wrap justify-content-around">
+        
+        {% for listing in listings %}
+            
+        <div class="card m-2 border-bottom" style="width: 20rem;">
+            <a href="{% url 'listing' listing.id %}" class="text-decoration-none text-dark">  
+                <img  src= "/media/{{listing.image}}" alt="Photo of {{ listing.title }}">
+                <div class="card-body border-top">
+                    <h5 class="card-title text-truncate">{{ listing }}</h5>
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-text p-2"><strong>£{{ listing.current_price|intcomma }}</strong></h5>
+                        <span class="p-2">{{listing.no_of_bids}} bid(s)</span>
+                    </div>
+                    <p class="card-text text-truncate"><small>{{ listing.description }}</small></p>
+                </div>
+            </a>
+        </div>
+            
+        {% empty %}
+        <div class="text-center">
+            <p>No listings found.</p>
+            <a type="button" href="{% url 'categories' %}" class="mt-3 btn btn-outline-secondary">Return to categories</a>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "auctions/layout.html" %}
+{% load humanize %}
+
+{% block title %} Active Listings {% endblock %}
+
+{% block body %}
+    <h2 class="text-center title">Active Listings</h2>
+    <div class="container d-flex flex-wrap justify-content-center">
+        
+        {% for listing in listings %}
+            <div class="card m-2 border-bottom" style="width: 20rem;">
+                <a href="{% url 'listing' listing.id %}" class="text-decoration-none text-dark">  
+                    <img class="card-img-top" src= "/media/{{listing.image}}">
+                    <div class="card-body border-top">
+                        <h5 class="card-title text-truncate">{{ listing }}</h5>
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-text p-2"><strong>£{{ listing.current_price|intcomma }}</strong></h5>
+                            <span class="p-2">{{listing.no_of_bids}} bid(s)</span>
+                        </div>
+                        <p class="card-text text-truncate"><small>{{ listing.description }}</small></p>
+                    </div>
+                </a>
+            </div>
+        {% empty %}
+            No active listings
+        {% endfor %}
+        
+    </div>
+{% endblock %}
